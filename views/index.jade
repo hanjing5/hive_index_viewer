@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p
+    form(action="/search", method="post")
+      | <input type="text" name="search" id="id_search"/>
+      | <input type="submit" name="submit" id="submit" >
