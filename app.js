@@ -10,7 +10,9 @@ var express = require('express')
   , path = require('path');
 
 var app = express();
-var search = require('./routes/search');
+//var search = require('./routes/search');
+
+var IndexProvider = require('./db').IndexProvider;
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -30,8 +32,19 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.post('/search', search.results);
+//app.post('/search', search.results);
 
+var indexProvider = new IndexProvider('localhost', 27017);
+app.post('/search', function(req, res) {
+  console.log(req);
+    indexProvider.findByStructure(req.body.search,  function(error, docs) {
+        res.render('results',
+        {
+          query: req.body.search,
+            results: docs
+        });
+    });
+});
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
