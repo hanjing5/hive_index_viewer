@@ -11,17 +11,17 @@ IndexProvider = function(host, port) {
 
 
 IndexProvider.prototype.getCollection= function(callback) {
-  this.db.collection('processed_table', function(error, article_collection) {
+  this.db.collection('processed_table', function(error, index_collection) {
     if( error ) callback(error);
-    else callback(null, article_collection);
+    else callback(null, index_collection);
   });
 };
 
 IndexProvider.prototype.findAll = function(callback) {
-    this.getCollection(function(error, article_collection) {
+    this.getCollection(function(error, index_collection) {
       if( error ) callback(error)
       else {
-        article_collection.find().toArray(function(error, results) {
+        index_collection.find().toArray(function(error, results) {
           if( error ) callback(error)
           else callback(null, results)
         });
@@ -30,23 +30,22 @@ IndexProvider.prototype.findAll = function(callback) {
 };
 
 IndexProvider.prototype.findByStructure = function(id, callback) {
-    console.log(id);
-  console.log("looking for structure");
-    this.getCollection(function(error, article_collection) {
-      if( error ) callback(error)
-      else {
-        article_collection.findOne({structure:{"$regex": id}}, function(error, results) {
-          if( error ) callback(error)
-          else callback(null, results)
-        });
-      }
-    });
+  console.log("query: " +id);
+  this.getCollection(function(error, index_collection) {
+    if( error ) callback(error)
+    else {
+      index_collection.find({merged_structure: {"$regex":id}}).toArray(function(error, results) {
+        if( error ) callback(error)
+        else callback(null, results)
+      });
+    }
+  });
 };
 IndexProvider.prototype.findById = function(id, callback) {
-    this.getCollection(function(error, article_collection) {
+    this.getCollection(function(error, index_collection) {
       if( error ) callback(error)
       else {
-        article_collection.findOne({_id: article_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
+        index_collection.findOne({_id: index_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
           if( error ) callback(error)
           else callback(null, result)
         });
@@ -55,7 +54,7 @@ IndexProvider.prototype.findById = function(id, callback) {
 };
 
 IndexProvider.prototype.save = function(articles, callback) {
-    this.getCollection(function(error, article_collection) {
+    this.getCollection(function(error, index_collection) {
       if( error ) callback(error)
       else {
         if( typeof(articles.length)=="undefined")
@@ -70,7 +69,7 @@ IndexProvider.prototype.save = function(articles, callback) {
           }
         }
 
-        article_collection.insert(articles, function() {
+        index_collection.insert(articles, function() {
           callback(null, articles);
         });
       }
