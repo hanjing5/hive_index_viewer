@@ -2,6 +2,7 @@ extends layout
 
 block content
   .container
+    p <a href='/'>Home</a>
     h1= "Search Query: " +query
     h2= "Results Count: " + results.length
     div
@@ -15,10 +16,19 @@ block content
                 $("##{results[i]['_id']}").toggle();
             });
             $("##{results[i]['_id']}").hide();
-          p
-            - structure = results[i]['structure'].split("\n")
-            - for(j = 0; j < structure.length; j++)
-              =structure[j]
-              br
+          table(class="table table-hover table-striped")
+            tbody
+              - structure = results[i]['structure'].split("\n")
+              - for(j = 0; j < structure.length; j++)
+                - if (j == structure.length-1) {continue;}
+                tr
+                  - cell = structure[j].split("\t")
+                  - for(k= 0; k < cell.length; k++)
+                    - if (j == 0) {
+                      th= cell[k]
+                    - } else {
+                      td= cell[k]
+                    -}
+
 
 
