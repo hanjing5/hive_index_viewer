@@ -3,5 +3,11 @@ h1= "Search Query: " +query
 div
   - for(i = 0; i < results.length; i++)
     h3= results[i]['db_name'] + "." + results[i]['table_name']
+    div
+      p
+        - structure = results[i]['structure'].split("\n")
+        - for(j = 0; j < structure.length; j++)
+          =structure[j]
+          br
 
 

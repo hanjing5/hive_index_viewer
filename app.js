@@ -37,19 +37,22 @@ app.get('/users', user.list);
 var indexProvider = new IndexProvider('localhost', 27017);
 app.post('/search', function(req, res) {
   //console.log(req);
-    indexProvider.findByStructure(req.body.search,  function(error, docs) {
-        console.log(docs.length);
-        res.render('results',
-        {
-          query: req.body.search,
-          results: docs
-        });
-    });
+  indexProvider.findByStructure(req.body.search,  function(error, docs) {
+      console.log(docs.length);
+      res.render('results',
+      {
+        query: req.body.search,
+        results: docs
+      });
+  });
 });
 app.get('/databases', function(req, res) {
     indexProvider.findAll(function(error, docs) {
       console.log(docs.length);
-      res.render('databases', {results: docs});
+      res.render('databases',
+        {
+          results: docs
+        });
     });
 });
 http.createServer(app).listen(app.get('port'), function(){
