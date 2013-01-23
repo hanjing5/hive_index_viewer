@@ -9,6 +9,7 @@
     "express": "3.0.6",
     "jade": "*",
     "nodemon": "*",
+    "mongodb": "*",
     "twitter-bootstrap-node": "*"
   }
 }

@@ -35,13 +35,19 @@ app.get('/users', user.list);
 //app.post('/search', search.results);
 
 var indexProvider = new IndexProvider('localhost', 27017);
+
 app.post('/search', function(req, res) {
+    console.log(req);
+    res.redirect("/search/" + req.body.search);
+});
+app.get('/search/:query', function(req, res) {
   //console.log(req);
-  indexProvider.findByStructure(req.body.search,  function(error, docs) {
+  indexProvider.findByStructure(req.params.query,  function(error, docs) {
       console.log(docs.length);
       res.render('results',
       {
-        query: req.body.search,
+        title: "Search Results for "+req.params.query,
+        query: req.params.query,
         results: docs
       });
   });

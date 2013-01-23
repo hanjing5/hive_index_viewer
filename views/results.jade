@@ -1,13 +1,22 @@
-h1= "Search Query: " +query
+extends layout
 
-div
-  - for(i = 0; i < results.length; i++)
-    h3= results[i]['db_name'] + "." + results[i]['table_name']
-    div
-      p
-        - structure = results[i]['structure'].split("\n")
-        - for(j = 0; j < structure.length; j++)
-          =structure[j]
-          br
+block content
+  h1= "Search Query: " +query
+  h2= "Results Count: " + results.length
+  div
+    - for(i = 0; i < results.length; i++)
+      h3= results[i]['db_name'] + "." + results[i]['table_name']
+      button(id=results[i]['_id'] + "_click", type="button")
+        show/hide details
+      div(id=results[i]['_id'])
+        script
+          $("##{results[i]['_id']}_click").click(function() {
+              $("##{results[i]['_id']}").toggle();
+          });
+        p
+          - structure = results[i]['structure'].split("\n")
+          - for(j = 0; j < structure.length; j++)
+            =structure[j]
+            br
 
 
