@@ -38,7 +38,7 @@ var indexProvider = new IndexProvider('localhost', 27017);
 
 app.post('/search', function(req, res) {
     console.log(req);
-    res.redirect("/search/" + req.body.search);
+    res.redirect("/search/" + req.body.search[0]);
 });
 app.get('/search/:query', function(req, res) {
   //console.log(req);

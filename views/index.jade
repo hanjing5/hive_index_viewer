@@ -1,9 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  p
-    form(action="/search", method="post")
-      | <input type="text" name="search" id="id_search"/>
-      | <input type="submit" name="submit" id="submit" >
+  .container
+    h1= title
+    p Welcome to #{title}
+    p
+      form(action="/search", method="post")
+        input(type="text", name="search", id="id_search", class="input-xxlarge search-query", style="height:55px;margin-right:20px")
+        button(type="submit",name="search",id="submit",class="btn btn-primary btn-large") Search!
