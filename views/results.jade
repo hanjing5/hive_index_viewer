@@ -3,13 +3,20 @@ extends layout
 block content
   .container
     p <a href='/'>Home</a>
-    h1= "Search Query: " +query
-    h2= "Results Count: " + results.length
+    p
+      form(action="/search", method="post")
+        input(type="text", name="search", id="id_search", class="input-xxlarge", style="height:55px;margin-right:20px;font-size:200%",placeholder="#{query}")
+        button(type="submit",name="search",id="submit",class="btn btn-primary btn-large",style="vertical-align:top") Search!
+    p= "Your search query \"" +query +  "\" retrieved " + results.length + " results."
+    hr
     div
       - for(i = 0; i < results.length; i++)
-        h3= results[i]['db_name'] + "." + results[i]['table_name']
-        button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary")
-          show/hide details
+        div
+          div
+            h3= results[i]['db_name'] + "." + results[i]['table_name']
+          div(class="pull-right",style="vertical-align:top")
+            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") toggle details
+        br
         div(id=results[i]['_id'])
           script
             $("##{results[i]['_id']}_click").click(function() {
@@ -29,6 +36,5 @@ block content
                     - } else {
                       td= cell[k]
                     -}
-
-
+        hr
 

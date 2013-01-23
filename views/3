@@ -9,10 +9,9 @@ block content
       h3 database names
       h3 table names
       h3 table structures
-      h2 of <a href="https://confluence.walmartlabs.com/display/kosmix/BFD+Data+Catalog">@Labs' Hadoop cluster</a>.
-      p try a search (ie: <a href="/search/baby">baby</a>).
+      h2 of @Labs' Hadoop cluster.
       p
         form(action="/search", method="post")
           input(type="text", name="search", id="id_search", class="input-xxlarge", style="height:55px;margin-right:20px;font-size:200%")
           button(type="submit",name="search",id="submit",class="btn btn-primary btn-large",style="vertical-align:top") Search!
-    p Please send all queries to Han Jing, SDE for <a href="http://gifts.walmart.com">Walmart Gifts Finder</a>, hjing@walmartlabs.com, Bldg 850 C Fl 5, Loc C.5.188
+      p Please send all queries to Han Jing, SDE for <a href="http://gifts.walmart.com">Walmart Gifts Finder</a>, hjing@walmartlabs.com, Bldg 850 C Fl 5, Loc C.5.188
