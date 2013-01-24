@@ -16,6 +16,12 @@ IndexProvider.prototype.getCollection= function(callback) {
     else callback(null, index_collection);
   });
 };
+IndexProvider.prototype.getStats= function(callback) {
+  this.db.collection('stats_table', function(error, stats_collection) {
+    if( error ) callback(error);
+    else callback(null, stats_collection);
+  });
+};
 
 IndexProvider.prototype.findAll = function(callback) {
     this.getCollection(function(error, index_collection) {
@@ -51,6 +57,17 @@ IndexProvider.prototype.findById = function(id, callback) {
         });
       }
     });
+};
+
+IndexProvider.prototype.viewed = function(page, callback){
+  this.getStats(function(error, stats_collection) {
+        if( error ) callback(error)
+        else {
+          stats_collection.insert(page, function() {
+            callback(null, page);
+          });
+        }
+      });
 };
 
 IndexProvider.prototype.save = function(articles, callback) {
