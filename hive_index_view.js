@@ -38,17 +38,20 @@ var indexProvider = new IndexProvider('localhost', 27017);
 
 app.post('/search', function(req, res) {
     console.log(req);
-    res.redirect("/search/" + req.body.search[0]);
+    res.redirect("/search/" + req.body.search[0]+"/0/100");
 });
-app.get('/search/:query', function(req, res) {
-  //console.log(req);
-  indexProvider.findByStructure(req.params.query,  function(error, docs) {
+
+app.get('/search/:query/:from/:to', function(req, res) {
+  console.log(req);
+  console.log(req.params);
+  indexProvider.findByStructurePagination(req.params.query, parseInt(req.params.from), parseInt(req.params.to), function(error, docs) {
       console.log(docs.length);
       res.render('results',
       {
         title: "Search Results for "+req.params.query,
         query: req.params.query,
-        results: docs
+        results: docs,
+        from: parseInt(req.params.from)
       });
   });
 });

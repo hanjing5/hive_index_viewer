@@ -47,6 +47,19 @@ IndexProvider.prototype.findByStructure = function(id, callback) {
     }
   });
 };
+
+IndexProvider.prototype.findByStructurePagination = function(query, from, to, callback) {
+  console.log("query: " +query + "From " + from + " To " + to);
+  this.getCollection(function(error, index_collection) {
+    if( error ) callback(error)
+    else {
+      index_collection.find({merged_structure: {"$regex":query}}).sort().skip(from).limit(to).toArray(function(error, results) {
+        if( error ) callback(error)
+        else callback(null, results)
+      });
+    }
+  });
+};
 IndexProvider.prototype.findById = function(id, callback) {
     this.getCollection(function(error, index_collection) {
       if( error ) callback(error)
