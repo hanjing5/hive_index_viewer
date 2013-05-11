@@ -19,10 +19,12 @@ block content
     div
       - for(i = 0; i < results.length; i++)
         div
-          div
+          div(style="width:60%")
             h3= results[i]['db_names'][0] + "." + results[i]['table_name']
+          div(class="pull-right",style="vertical-align:top;margin-left:1em")
+            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") toggle column details
           div(class="pull-right",style="vertical-align:top")
-            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") toggle details
+            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") toggle database details
         br
         div(id=results[i]['_id'])
           script
