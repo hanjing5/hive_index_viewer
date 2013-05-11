@@ -11,7 +11,7 @@ IndexProvider = function(host, port) {
 
 
 IndexProvider.prototype.getCollection= function(callback) {
-  this.db.collection('processed_table', function(error, index_collection) {
+  this.db.collection('merged_processed_table', function(error, index_collection) {
     if( error ) callback(error);
     else callback(null, index_collection);
   });
@@ -60,6 +60,7 @@ IndexProvider.prototype.findByStructurePagination = function(query, from, to, ca
     }
   });
 };
+
 IndexProvider.prototype.findById = function(id, callback) {
     this.getCollection(function(error, index_collection) {
       if( error ) callback(error)

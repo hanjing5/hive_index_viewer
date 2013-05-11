@@ -20,7 +20,7 @@ block content
       - for(i = 0; i < results.length; i++)
         div
           div
-            h3= results[i]['db_name'] + "." + results[i]['table_name']
+            h3= results[i]['db_names'][0] + "." + results[i]['table_name']
           div(class="pull-right",style="vertical-align:top")
             button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") toggle details
         br

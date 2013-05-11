@@ -55,6 +55,7 @@ app.get('/search/:query/:from/:to', function(req, res) {
       });
   });
 });
+
 app.get('/databases', function(req, res) {
     indexProvider.findAll(function(error, docs) {
       console.log(docs.length);
@@ -64,6 +65,7 @@ app.get('/databases', function(req, res) {
         });
     });
 });
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
