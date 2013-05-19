@@ -16,34 +16,45 @@ block content
 
         a(href="/search/"+ query+"/"+ (from+100)+"/"+(from+200)+"/") Next
     hr
-    div
+    div(class="container-fluid")
       - for(i = 0; i < results.length; i++)
-        div
-          div(style="width:60%")
-            h3!= highlight(results[i]['db_names'][0] + "." + results[i]['table_name'], query)
-          div(class="pull-right",style="vertical-align:top;margin-left:1em")
-            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") show columns
-          div(class="pull-right",style="vertical-align:top")
-            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") more databases
-        br
-        div(id=results[i]['_id'])
-          script
-            $("##{results[i]['_id']}_click").click(function() {
-                $("##{results[i]['_id']}").toggle();
-            });
-            $("##{results[i]['_id']}").hide();
-          table(class="table table-hover table-striped")
-            tbody
-              - structure = results[i]['structure'].split("\n")
-              - for(j = 0; j < structure.length; j++)
-                - if (j == structure.length-1) {continue;}
-                tr
-                  - cell = structure[j].split("\t")
-                  - for(k= 0; k < cell.length; k++)
-                    - if (j == 0) {
-                      th!= highlight(cell[k], query)
-                    - } else {
-                      td!= highlight(cell[k], query)
-                    -}
-        hr
+        div(class="row-fluid", style="border:1px solid;border-radius:5px;padding:5px;")
+          .span12
+            .span8
+              h3(id=results[i]['_id']+"_h3_click")
+                != highlight(results[i]['db_names'][0] + "." + results[i]['table_name'], query)
+            .span4.pull-right
+              button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary pull-right") show columns & databases
+          div(id=results[i]['_id'],class="span12")
+            script
+              $("##{results[i]['_id']}_click").click(function() {
+                  $("##{results[i]['_id']}").toggle();
+              });
+              $("##{results[i]['_id']}_h3_click").click(function() {
+                  $("##{results[i]['_id']}").toggle();
+              });
+              $("##{results[i]['_id']}").hide();
+            div(class="span8")
+              table(class="table table-hover table-striped")
+                tbody
+                  - structure = results[i]['structure'].split("\n")
+                  - for(j = 0; j < structure.length; j++)
+                    - if (j == structure.length-1) {continue;}
+                    tr
+                      - cell = structure[j].split("\t")
+                      - for(k= 0; k < cell.length; k++)
+                        - if (j == 0) {
+                          th!= highlight(cell[k], query)
+                        - } else {
+                          td!= highlight(cell[k], query)
+                        -}
+            div(class="span2 offset1")
+              table(class="table table-hover table-striped pull-right")
+                tbody
+                  th database names
+                  - db_names = results[i]['db_names']
+                  - for(j = 0; j < db_names.length; j++)
+                    tr
+                      td!= highlight(db_names[j], query)
+           hr
 
