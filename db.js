@@ -49,14 +49,31 @@ IndexProvider.prototype.findByStructure = function(id, callback) {
 };
 
 IndexProvider.prototype.findByStructurePagination = function(query, from, to, callback) {
-  console.log("query: " +query + "From " + from + " To " + to);
+  console.log("query: " +query + " From " + from + " To " + to);
   this.getCollection(function(error, index_collection) {
     if( error ) callback(error)
     else {
-      index_collection.find({merged_structure: {"$regex":query}}).sort().skip(from).limit(to).toArray(function(error, results) {
-        if( error ) callback(error)
-        else callback(null, results)
-      });
+      var queries = query.split(" ")
+      var final_query = []
+      for (var i = 0 ; i < queries.length; i++) {
+        final_query.push( {merged_structure: {"$regex": queries[i]}})
+      }
+      if (queries.length == 1) {
+        index_collection.find({merged_structure: {"$regex":query}}).sort().skip(from).limit(to).toArray(function(error, results) {
+          if( error ) callback(error)
+          else callback(null, results)
+        });
+      } else{
+        console.log("split queries: " + queries)
+        console.log("final_query:" + final_query)
+
+        index_collection.find({$and: final_query}).sort().skip(from).limit(to).toArray(function(error, results) {
+          console.log(queries)
+          if( error ) callback(error)
+          else callback(null, results)
+        });
+      }
+
     }
   });
 };
