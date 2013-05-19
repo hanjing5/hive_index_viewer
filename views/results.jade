@@ -20,11 +20,11 @@ block content
       - for(i = 0; i < results.length; i++)
         div
           div(style="width:60%")
-            h3= results[i]['db_names'][0] + "." + results[i]['table_name']
+            h3!= highlight(results[i]['db_names'][0] + "." + results[i]['table_name'], query)
           div(class="pull-right",style="vertical-align:top;margin-left:1em")
-            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") toggle column details
+            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") show columns
           div(class="pull-right",style="vertical-align:top")
-            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") toggle database details
+            button(id=results[i]['_id'] + "_click", type="button", class=".btn btn-primary") more databases
         br
         div(id=results[i]['_id'])
           script
@@ -41,9 +41,9 @@ block content
                   - cell = structure[j].split("\t")
                   - for(k= 0; k < cell.length; k++)
                     - if (j == 0) {
-                      th= cell[k]
+                      th!= highlight(cell[k], query)
                     - } else {
-                      td= cell[k]
+                      td!= highlight(cell[k], query)
                     -}
         hr
 

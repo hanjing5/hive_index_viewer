@@ -41,6 +41,9 @@ app.post('/search', function(req, res) {
     res.redirect("/search/" + req.body.search[0]+"/0/100");
 });
 
+app.locals.highlight = function(str, query){
+    return str.replace(query, '<font style="background-color: yellow;">'+query+'</font>')
+  }
 app.get('/search/:query/:from/:to', function(req, res) {
   console.log(req);
   console.log(req.params);
