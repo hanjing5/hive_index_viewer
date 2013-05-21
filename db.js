@@ -16,12 +16,28 @@ IndexProvider.prototype.getCollection= function(callback) {
     else callback(null, index_collection);
   });
 };
+
+
 IndexProvider.prototype.getStats= function(callback) {
   this.db.collection('stats_table', function(error, stats_collection) {
     if( error ) callback(error);
     else callback(null, stats_collection);
   });
 };
+
+IndexProvider.prototype.findAllStats = function(callback) {
+    this.getStats(function(error, index_collection) {
+      if( error ) callback(error)
+      else {
+        console.log(index_collection);
+        index_collection.findOne(function(error, results) {
+          if( error ) callback(error)
+          else callback(null, results)
+        });
+      }
+    });
+};
+
 
 IndexProvider.prototype.findAll = function(callback) {
     this.getCollection(function(error, index_collection) {
@@ -78,51 +94,60 @@ IndexProvider.prototype.findByStructurePagination = function(query, from, to, ca
   });
 };
 
-IndexProvider.prototype.findById = function(id, callback) {
-    this.getCollection(function(error, index_collection) {
+IndexProvider.prototype.view = function(callback) {
+    this.getStats(function(error, index_collection) {
       if( error ) callback(error)
       else {
-        index_collection.findOne({_id: index_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
-          if( error ) callback(error)
-          else callback(null, result)
-        });
+        index_collection.update({"stats":true}, {$inc:{views:1}});
       }
     });
 };
 
-IndexProvider.prototype.viewed = function(page, callback){
-  this.getStats(function(error, stats_collection) {
-        if( error ) callback(error)
-        else {
-          stats_collection.insert(page, function() {
-            callback(null, page);
-          });
-        }
-      });
-};
+//IndexProvider.prototype.findById = function(id, callback) {
+//    this.getCollection(function(error, index_collection) {
+//      if( error ) callback(error)
+//      else {
+//        index_collection.findOne({_id: index_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
+//          if( error ) callback(error)
+//          else callback(null, result)
+//        });
+//      }
+//    });
+//};
 
-IndexProvider.prototype.save = function(articles, callback) {
-    this.getCollection(function(error, index_collection) {
-      if( error ) callback(error)
-      else {
-        if( typeof(articles.length)=="undefined")
-          articles = [articles];
+//IndexProvider.prototype.viewed = function(page, callback){
+//  this.getStats(function(error, stats_collection) {
+//        if( error ) callback(error)
+//        else {
+//          stats_collection.insert(page, function() {
+//            callback(null, page);
+//          });
+//        }
+//      });
+//};
 
-        for( var i =0;i< articles.length;i++ ) {
-          article = articles[i];
-          article.created_at = new Date();
-          if( article.comments === undefined ) article.comments = [];
-          for(var j =0;j< article.comments.length; j++) {
-            article.comments[j].created_at = new Date();
-          }
-        }
-
-        index_collection.insert(articles, function() {
-          callback(null, articles);
-        });
-      }
-    });
-};
+//IndexProvider.prototype.save = function(articles, callback) {
+//    this.getCollection(function(error, index_collection) {
+//      if( error ) callback(error)
+//      else {
+//        if( typeof(articles.length)=="undefined")
+//          articles = [articles];
+//
+//        for( var i =0;i< articles.length;i++ ) {
+//          article = articles[i];
+//          article.created_at = new Date();
+//          if( article.comments === undefined ) article.comments = [];
+//          for(var j =0;j< article.comments.length; j++) {
+//            article.comments[j].created_at = new Date();
+//          }
+//        }
+//
+//        index_collection.insert(articles, function() {
+//          callback(null, articles);
+//        });
+//      }
+//    });
+//};
 
 console.log("this is the serverice Provider");
 exports.IndexProvider = IndexProvider;
