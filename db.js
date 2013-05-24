@@ -38,7 +38,6 @@ IndexProvider.prototype.findAllStats = function(callback) {
     });
 };
 
-
 IndexProvider.prototype.findAll = function(callback) {
     this.getCollection(function(error, index_collection) {
       if( error ) callback(error)
@@ -103,29 +102,6 @@ IndexProvider.prototype.view = function(callback) {
     });
 };
 
-//IndexProvider.prototype.findById = function(id, callback) {
-//    this.getCollection(function(error, index_collection) {
-//      if( error ) callback(error)
-//      else {
-//        index_collection.findOne({_id: index_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
-//          if( error ) callback(error)
-//          else callback(null, result)
-//        });
-//      }
-//    });
-//};
-
-//IndexProvider.prototype.viewed = function(page, callback){
-//  this.getStats(function(error, stats_collection) {
-//        if( error ) callback(error)
-//        else {
-//          stats_collection.insert(page, function() {
-//            callback(null, page);
-//          });
-//        }
-//      });
-//};
-
 //IndexProvider.prototype.save = function(articles, callback) {
 //    this.getCollection(function(error, index_collection) {
 //      if( error ) callback(error)
@@ -149,5 +125,5 @@ IndexProvider.prototype.view = function(callback) {
 //    });
 //};
 
-console.log("this is the serverice Provider");
+console.log("this is the main database service provider");
 exports.IndexProvider = IndexProvider;
