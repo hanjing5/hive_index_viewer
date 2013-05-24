@@ -32,7 +32,6 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-//app.post('/search', search.results);
 
 var indexProvider = new IndexProvider('localhost', 27017);
 
@@ -41,27 +40,21 @@ app.post('/search', function(req, res) {
     res.redirect("/search/" + req.body.search[0]+"/0/100");
 });
 
-// Helper functions
+// Helper function for highlight text
 app.locals.highlight = function(str, query){
     return str.replace(query, '<font style="background-color: yellow;">'+query+'</font>')
   }
 
-
 // main REST url for search
 app.get('/search/:query/:from/:to', function(req, res) {
-  //console.log(req);
-  //console.log(req.params);
-  //var stats =  indexProvider.findAllStats();
   indexProvider.view();
   indexProvider.findByStructurePagination(req.params.query, parseInt(req.params.from), parseInt(req.params.to), function(error, docs) {
-    //console.log(docs.length);
     res.render('results',
     {
       title: "Search Results for "+req.params.query,
       query: req.params.query,
       results: docs,
       from: parseInt(req.params.from),
-      //views: stats
     });
   });
 });
