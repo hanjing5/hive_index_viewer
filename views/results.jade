@@ -1,57 +1,57 @@
 extends layout
 
 block content
-  .container
-    p <a href='/'>Home</a>
-    p
-      form(action="/search", method="post")
-        input(type="text", name="search", id="id_search", class="input-xxlarge", style="height:55px;margin-right:20px;font-size:200%",placeholder="#{query}")
-        button(type="submit",name="search",id="submit",class="btn btn-primary btn-large",style="vertical-align:top") Search!
-    - var end=results.length % 100;
-    p= "\"" +query +  "\" return " + results.length + " results. Showing results from " + from + " to " + (from+end) + "."
-    - if (from > 0) {
-      a(href="/search/"+ query+"/"+ (from-100)+"/"+from+"/") Previous
-    -}
-    a(href="/search/"+ query+"/"+ (from+100)+"/"+(from+200)+"/") Next
-    hr
-    - for(i = 0; i < results.length; i++)
-      div(class="row", style="border-bottom:1px solid;")
-        .large-12
-          .row
-            .large-7.left.large-offset-1
+  p <a href='/'>Home</a>
+  p
+    form(action="/search", method="post")
+      input(type="text", name="search", id="id_search", class="input-xxlarge", style="height:55px;margin-right:20px;font-size:200%",placeholder="#{query}")
+      button(type="submit",name="search",id="submit",class="btn btn-primary btn-large",style="vertical-align:top") Search!
+  - var end=results.length % 100;
+  p= "\"" +query +  "\" return " + results.length + " results. Showing results from " + from + " to " + (from+end) + "."
+  - if (from > 0) {
+    a(href="/search/"+ query+"/"+ (from-100)+"/"+from+"/") Previous
+  -}
+  a(href="/search/"+ query+"/"+ (from+100)+"/"+(from+200)+"/") Next
+  hr
+  - for(i = 0; i < results.length; i++)
+    div(class="", style="border-bottom:1px solid;")
+      .large-12
+        .clearfix
+          div(class="large-1 left", style="padding-right:10px")
+            button(id=results[i]['_id'] + "_click", type="button", class="small button") 
+              ="More info"
+          .large-11.right
+            a
               h3(id=results[i]['_id']+"_h3_click")
                 != highlight(results[i]['db_names'][0] + "." + results[i]['table_name'], query)
-            .large-4.right
-              button(id=results[i]['_id'] + "_click", type="button", class="btn") 
-                ="Show Columns & Databases"
-          div(id=results[i]['_id'],class="row clearfix")
-            script
-              $("##{results[i]['_id']}_click").click(function() {
-                  $("##{results[i]['_id']}").toggle(250);
-              });
-              $("##{results[i]['_id']}_h3_click").click(function() {
-                  $("##{results[i]['_id']}").toggle(250);
-              });
-              $("##{results[i]['_id']}").hide(250);
-            .large-6.left.large-offset-1
-              table(class="table table-hover table-striped")
-                tbody
-                  - structure = results[i]['structure'].split("\n")
-                  - for(j = 0; j < structure.length; j++)
-                    - if (j == structure.length-1) {continue;}
-                    tr
-                      - cell = structure[j].split("\t")
-                      - for(k= 0; k < cell.length; k++)
-                        - if (j == 0) {
-                          th!= highlight(cell[k], query)
-                        - } else {
-                          td!= highlight(cell[k], query)
-                        -}
-            .large-5.right
-              table(class="table table-hover table-striped pull-right")
-                tbody
-                  th Duplicate Database Names
-                  - db_names = results[i]['db_names']
-                  - for(j = 0; j < db_names.length; j++)
-                    tr
-                      td!= highlight(db_names[j], query)
+        div(id=results[i]['_id'],class="clearfix")
+          script
+            $("##{results[i]['_id']}_click").click(function() {
+                $("##{results[i]['_id']}").toggle(250);
+            });
+            $("##{results[i]['_id']}_h3_click").click(function() {
+                $("##{results[i]['_id']}").toggle(250);
+            });
+            $("##{results[i]['_id']}").hide(250);
+          .large-6.left.large-offset-1
+            table(class="table table-hover table-striped")
+              tbody
+                - structure = results[i]['structure'].split("\n")
+                - for(j = 0; j < structure.length; j++)
+                  - if (j == structure.length-1) {continue;}
+                  tr
+                    - cell = structure[j].split("\t")
+                    - for(k= 0; k < cell.length; k++)
+                      - if (j == 0) {
+                        th!= highlight(cell[k], query)
+                      - } else {
+                        td!= highlight(cell[k], query)
+                      -}
+          .large-5.right
+            table(class="table table-hover table-striped pull-right")
+              tbody
+                th Duplicate Database Names
+                - db_names = results[i]['db_names']
+                - for(j = 0; j < db_names.length; j++)
+                  tr
+                    td!= highlight(db_names[j], query)

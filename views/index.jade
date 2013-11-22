@@ -24,7 +24,7 @@ block content
       font-size:120%;
     }
 
-  .container
+  .row
     .hero-unit
       h1= title
       h2 Welcome!
@@ -36,7 +36,12 @@ block content
       p try a search (ie: <a href="/search/item_info/0/100">item_info</a>).
       p
         form(action="/search", method="post")
-          input(type="text", name="search", id="id_search", class="input-xxlarge", style="height:55px;margin-right:20px;font-size:200%")
-          button(type="submit",name="search",id="submit",class="btn btn-primary btn-large",style="vertical-align:top") Search!
+          //input(type="text", name="search", id="id_search", class="input-xxlarge", style="height:55px;margin-right:20px;font-size:200%")
+          //button(type="submit",name="search",id="submit",class="btn btn-primary btn-large",style="vertical-align:top") Search!
+          .row.collapse
+            .small-10.columns
+              input(type="text", name="search", id="id_search")
+            .small-2.columns
+              button(type="submit",name="search",id="submit",class="button prefix") Search!
       p Warning: using other team's data without their permission can be very dangerous. It's up to each team's discretion to maintain or delete their data. Please contact the team if you wish to use their data in a production environment.
-      p Please send all queries regarding the app to Han Jing, SDE for <a href="http://gifts.walmart.com">Walmart Gifts Finder</a>, hjing@walmartlabs.com, Bldg 850 C Fl 5, Loc C.5.188
+      p Please send all queries regarding the app to Han Jing, Software Engineer @Personalizations, hjing@walmartlabs.com, Bldg 850 C Fl 5, Loc C.5.162
