@@ -5,10 +5,10 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
+ // , user = require('./routes/user')
   , path = require('path');
 
+  , http = require('http')
 var app = express();
 //var search = require('./routes/search');
 
@@ -31,7 +31,7 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+//app.get('/users', user.list);
 
 var indexProvider = new IndexProvider('localhost', 27017);
 
