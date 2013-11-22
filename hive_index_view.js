@@ -6,9 +6,8 @@
 var express = require('express')
   , routes = require('./routes')
  // , user = require('./routes/user')
-  , path = require('path');
-
-  , http = require('http')
+  , path = require('path')
+  , http = require('http');
 var app = express();
 //var search = require('./routes/search');
 
