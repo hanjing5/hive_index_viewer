@@ -10,6 +10,7 @@
     "jade": "*",
     "nodemon": "*",
     "mongodb": "*",
-    "twitter-bootstrap-node": "*"
+    "twitter-bootstrap-node": "*",
+"thrift-hive":"*"
   }
 }
