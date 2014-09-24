@@ -2,4 +2,5 @@ The Web App that searches through Hive Schemas for user names, database names, a
 
 Just run:
   
-  node hive_index_view.js
+    npm install -d
+    node hive_index_view.js
