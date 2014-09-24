@@ -1,5 +1,4 @@
-Sorry for the mess, I hacked this together in a day. :(
-
+The Web App that searches through Hive Schemas for user names, database names, and column names.
 
 Just run:
   
